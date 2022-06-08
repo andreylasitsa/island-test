@@ -1,0 +1,241 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Island collection",
+		"_postman_id": "d4dbc8e3-957e-4b76-12ba-322cd6b402fd",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get-users",
+			"request": {
+				"url": "{{host}}/wp-json/test/get-users/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "getting all the islanders"
+			},
+			"response": []
+		},
+		{
+			"name": "get-items",
+			"request": {
+				"url": "{{host}}/wp-json/test/get-items/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "getting all items of trade"
+			},
+			"response": []
+		},
+		{
+			"name": "add-user",
+			"request": {
+				"url": "{{host}}/wp-json/test/add-user/",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "User with items\n",
+							"type": "text"
+						}
+					]
+				},
+				"description": "adding an islander (items will be automatically generated)"
+			},
+			"response": []
+		},
+		{
+			"name": "edit-user",
+			"request": {
+				"url": "{{host}}/wp-json/test/edit-user/3",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "new name",
+							"type": "text"
+						}
+					]
+				},
+				"description": "edit the name of the resident (pass the id and the new name)"
+			},
+			"response": []
+		},
+		{
+			"name": "delete-user",
+			"request": {
+				"url": "{{host}}/wp-json/test/delete-user/3",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": "deleting a resident (passing his id)"
+			},
+			"response": []
+		},
+		{
+			"name": "delete-item",
+			"request": {
+				"url": "{{host}}/wp-json/test/delete-item/2",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": "delete the item (pass its id)"
+			},
+			"response": []
+		},
+		{
+			"name": "add-item",
+			"request": {
+				"url": "{{host}}/wp-json/test/add-item/",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Water",
+							"type": "text"
+						},
+						{
+							"key": "value",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"description": "Add an item (pass the name and number of points)"
+			},
+			"response": []
+		},
+		{
+			"name": "add-lot",
+			"request": {
+				"url": "{{host}}/wp-json/test/add-lot/",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "creator_id",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "consumer_id",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "creator_items",
+							"value": "{\"items\":\n[\"BE developer\"], \n\"total\":10}",
+							"type": "text"
+						},
+						{
+							"key": "consumer_items",
+							"value": "{\"items\":\n[\"Soup\"], \n\"total\":8}",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Add a lot, pass the id of the lot creator, what he wants to give and what he wants to get (the consumer_id field can be empty if a public transaction is created)"
+			},
+			"response": []
+		},
+		{
+			"name": "accept-lot",
+			"request": {
+				"url": "{{host}}/wp-json/test/accept-lot/",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "lot_id",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "consumer_id",
+							"value": "5",
+							"type": "text"
+						}
+					]
+				},
+				"description": "accepting a public lot (pass the id of the lot, the id of the resident who wants to exchange)"
+			},
+			"response": []
+		},
+		{
+			"name": "get-user",
+			"request": {
+				"url": "{{host}}/wp-json/test/get-user/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "getting a resident of the island (passing his id)"
+			},
+			"response": []
+		},
+		{
+			"name": "get-available-lots",
+			"request": {
+				"url": "{{host}}/wp-json/test/get-available-lots/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "getting a resident of the island (passing his id)"
+			},
+			"response": []
+		},
+		{
+			"name": "get-own-lots",
+			"request": {
+				"url": "{{host}}/wp-json/test/get-own-lots/5",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get-user-lots",
+			"request": {
+				"url": "{{host}}/wp-json/test/get-user-lots/6",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "getting a private lot for a resident (passing the resident's id)"
+			},
+			"response": []
+		},
+		{
+			"name": "get-item",
+			"request": {
+				"url": "{{host}}/wp-json/test/get-item/3",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "getting information about item"
+			},
+			"response": []
+		}
+	]
+}
