@@ -2,15 +2,15 @@
 
 class ItemResource
 {
-    function get_items(): array
+    function get_items(): WP_REST_Response
     {
         global $wpdb, $table_prefix;
         $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $table_prefix . "items"));
 
-        return returnResult($result);
+        return new WP_REST_Response($result);
     }
 
-    function add_item(WP_REST_Request $request): array
+    function add_item(WP_REST_Request $request): WP_REST_Response
     {
         $item_name = (string)$request['name'];
         $item_value = (int)$request['value'];
@@ -27,10 +27,10 @@ class ItemResource
             $wpdb->prepare("SELECT * FROM " . $table_prefix . "items WHERE id = " . $last_id . " ORDER BY id ")
         );
 
-        return returnResult($result);
+        return new WP_REST_Response($result);
     }
 
-    function get_item(WP_REST_Request $request): array
+    function get_item(WP_REST_Request $request): WP_REST_Response
     {
         $id_item = (int)$request['id'];
         global $wpdb, $table_prefix;
@@ -41,10 +41,10 @@ class ItemResource
             )
         );
 
-        return returnResult($result);
+        return new WP_REST_Response($result);
     }
 
-    function delete_item(WP_REST_Request $request): array
+    function delete_item(WP_REST_Request $request): WP_REST_Response
     {
         $item_id = (int)$request['id'];
 
@@ -53,6 +53,6 @@ class ItemResource
             'id' => $item_id,
         ));
 
-        return returnResult('DELETED');
+        return new WP_REST_Response('DELETED');
     }
 }

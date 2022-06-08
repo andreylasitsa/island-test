@@ -18,15 +18,15 @@ require('ItemResource.php');
  * @param int $lot_id
  * @return array
  */
-function extracted($result, $consumer_id, $consumer_items, $creator_id, $creator_items, wpdb $wpdb, string $table_prefix, int $lot_id): array
+function extracted($result, $consumer_id, $consumer_items, $creator_id, $creator_items, wpdb $wpdb, string $table_prefix, int $lot_id): WP_REST_Response
 {
     if (!empty($result)) {
         if (!checkUser($consumer_id) || !checkUserItems($consumer_id, $consumer_items)) {
-            return returnResult("please check consumer items", 422);
+            return new WP_REST_Response("please check consumer items", 422);
         }
 
         if (!checkUser($creator_id) || !checkUserItems($creator_id, $creator_items)) {
-            return returnResult("please check creator items", 422);
+            return new WP_REST_Response("please check creator items", 422);
         }
     }
 
@@ -66,5 +66,5 @@ function extracted($result, $consumer_id, $consumer_items, $creator_id, $creator
         'id' => $lot_id
     ));
 
-    return returnResult("deal is successful");
+    return new WP_REST_Response("deal is successful");
 }

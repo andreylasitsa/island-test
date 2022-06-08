@@ -2,7 +2,7 @@
 
 class BidResource
 {
-    function add_lot(WP_REST_Request $request): array
+    function add_lot(WP_REST_Request $request): WP_REST_Response
     {
         global $wpdb, $table_prefix;
         $creator_id = (int)$request['creator_id'];
@@ -11,15 +11,15 @@ class BidResource
         $consumer_items = (string)$request['consumer_items'];
 
         if ($creator_id === $consumer_id || $creator_id === 0) {
-            return returnResult("Check consumer_id and creator_id", 422);
+            return new WP_REST_Response("Check consumer_id and creator_id", 422);
         }
 
         if (!checkUser($creator_id)) {
-            return returnResult("User " . $creator_id . " doesn't exist", 422);
+            return new WP_REST_Response("User " . $creator_id . " doesn't exist", 422);
         }
         if ($consumer_id != 0) {
             if (!checkUser($consumer_id)) {
-                return returnResult("User " . $creator_id . " doesn't exist", 422);
+                return new WP_REST_Response("User " . $creator_id . " doesn't exist", 422);
             }
         }
 
@@ -27,21 +27,21 @@ class BidResource
         $consumer_items = json_decode($consumer_items);
 
         if (!checkUserItems($creator_id, $creator_items)) {
-            return returnResult("Check creator items, please", 422);
+            return new WP_REST_Response("Check creator items, please", 422);
         }
 
         if ($consumer_id != 0) {
             if (!checkUserItems($creator_id, $consumer_items)) {
-                return returnResult("Check consumer items, please", 422);
+                return new WP_REST_Response("Check consumer items, please", 422);
             }
         } else {
             if (!checkTotal($consumer_items)) {
-                return returnResult("Check consumer items, please", 422);
+                return new WP_REST_Response("Check consumer items, please", 422);
             }
         }
 
         if ($creator_items->total < $consumer_items->total) {
-            return returnResult("your total amount is less than needed", 422);
+            return new WP_REST_Response("your total amount is less than needed", 422);
         }
 
         $wpdb->insert($table_prefix . "lots", array(
@@ -58,10 +58,10 @@ class BidResource
             $wpdb->prepare("SELECT * FROM " . $table_prefix . "lots WHERE id = " . $last_id . " ORDER BY id ")
         );
 
-        return returnResult($result);
+        return new WP_REST_Response($result);
     }
 
-    function get_available_lots(): array
+    function get_available_lots(): WP_REST_Response
     {
         global $wpdb, $table_prefix;
         $result = $wpdb->get_results(
@@ -71,10 +71,10 @@ class BidResource
             )
         );
 
-        return returnResult($result);
+        return new WP_REST_Response($result);
     }
 
-    function get_own_lots(WP_REST_Request $request): array
+    function get_own_lots(WP_REST_Request $request): WP_REST_Response
     {
         $id_item = (int)$request['id'];
         global $wpdb, $table_prefix;
@@ -86,10 +86,10 @@ class BidResource
             )
         );
 
-        return returnResult($result);
+        return new WP_REST_Response($result);
     }
 
-    function get_user_lots(WP_REST_Request $request): array
+    function get_user_lots(WP_REST_Request $request): WP_REST_Response
     {
         $id_item = (int)$request['id'];
         global $wpdb, $table_prefix;
@@ -101,10 +101,10 @@ class BidResource
             )
         );
 
-        return returnResult($result);
+        return new WP_REST_Response($result);
     }
 
-    function accept_lot(WP_REST_Request $request): array
+    function accept_lot(WP_REST_Request $request): WP_REST_Response
     {
         global $wpdb, $table_prefix;
         $lot_id = (int)$request['lot_id'];
@@ -118,7 +118,7 @@ class BidResource
         );
 
         if (!$result) {
-            return returnResult("no deals", 422);
+            return new WP_REST_Response("no deals", 422);
         }
 
         $lot_items = $wpdb->get_results(

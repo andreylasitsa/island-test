@@ -10,7 +10,7 @@ class UserResource
         return new WP_REST_Response($result);
     }
 
-    public function add_user(WP_REST_Request $request): array
+    public function add_user(WP_REST_Request $request): WP_REST_Response
     {
         $user_name = (string)$request['name'];
 
@@ -27,10 +27,10 @@ class UserResource
 
         generateItems($last_id);
 
-        return returnResult($result);
+        return new WP_REST_Response($result);
     }
 
-    public function delete_user(WP_REST_Request $request): array
+    public function delete_user(WP_REST_Request $request): WP_REST_Response
     {
         $user_id = (int)$request['id'];
 
@@ -39,10 +39,10 @@ class UserResource
             'id' => $user_id,
         ));
 
-        return returnResult('DELETED');
+        return new WP_REST_Response('DELETED');
     }
 
-    public function edit_user(WP_REST_Request $request): array
+    public function edit_user(WP_REST_Request $request): WP_REST_Response
     {
         $user_id = (int)$request['id'];
         $user_name = (string)$request['name'];
@@ -58,10 +58,10 @@ class UserResource
             $wpdb->prepare("SELECT * FROM " . $table_prefix . "test_users WHERE id = " . $user_id . " ORDER BY id ")
         );
 
-        return returnResult($result);
+        return new WP_REST_Response($result);
     }
 
-    public function get_user(WP_REST_Request $request): array
+    public function get_user(WP_REST_Request $request): WP_REST_Response
     {
         $id_user = (int)$request['id'];
         global $wpdb, $table_prefix;
@@ -81,7 +81,7 @@ class UserResource
             )
         );
 
-        return returnResult($result, $items);
+        return new WP_REST_Response($result, $items);
     }
 
 }

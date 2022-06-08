@@ -41,7 +41,7 @@ class Test_Plugin
         add_action(self::REST_API_INIT, function () use ($namespace, $id_pattern) {
             //User api
             register_rest_route($namespace, '/get-users/', set_route_params(self::GET_METHOD, [UserResource::class, 'get_users']));
-            register_rest_route($namespace, '/get-user/', set_route_params(self::GET_METHOD, [UserResource::class, 'get_user'], ['id']));
+            register_rest_route($namespace, '/get-user/' . $id_pattern, set_route_params(self::GET_METHOD, [UserResource::class, 'get_user'], ['id']));
             register_rest_route($namespace, '/edit-user/' . $id_pattern, set_route_params(self::POST_METHOD, [UserResource::class, 'edit_user'], ['id']));
             register_rest_route($namespace, '/add-user/', set_route_params(self::POST_METHOD, [UserResource::class, 'add_user']));
             register_rest_route($namespace, '/delete-user/' . $id_pattern, set_route_params(self::DELETE_METHOD, [UserResource::class, 'delete_user'], ['id']));

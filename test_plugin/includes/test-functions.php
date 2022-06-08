@@ -103,19 +103,3 @@ function checkTotal($items)
         return false;
     }
 }
-
-function returnResult($result, $code = 200, $items = null): array
-{
-    if (!$items) {
-        return array(
-            'code' => $code,
-            'result' => $result
-        );
-    }
-    return array(
-        'code' => $code,
-        'result' => $result,
-        'items' => $items
-    );
-
-}
